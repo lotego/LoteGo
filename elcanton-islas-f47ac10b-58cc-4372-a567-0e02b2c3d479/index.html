@@ -3,93 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="robots" content="noindex">
+    <meta name="robots" content="noindex">
     <title>Acceso | El Cantón - Islas</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #333;
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
         }
-        .container {
-            background-color: white;
-            padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 90%;
-            max-width: 350px;
-        }
-        h1 {
-            color: #2c3e50;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        p {
-            color: #7f8c8d;
-            font-size: 15px;
-            margin-bottom: 25px;
-        }
-        input[type="number"] {
-            width: 100%;
-            padding: 15px;
-            font-size: 18px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            text-align: center;
-            margin-bottom: 20px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        input[type="number"]:focus {
-            border-color: #3498db;
-        }
-        button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 15px;
-            width: 100%;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-        button:disabled {
-            background-color: #95a5a6;
-            cursor: not-allowed;
-        }
-        .error {
-            color: #e74c3c;
-            font-size: 14px;
-            margin-top: 15px;
-            display: none;
-            font-weight: bold;
-        }
-    </style>
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
+<body class="font-sans bg-gray-50 text-gray-800 antialiased selection:bg-brand-500 selection:text-white flex flex-col items-center justify-center min-h-screen p-4">
 
-    <div class="container">
-        <h1>El Cantón - Islas</h1>
-        <p>Ingresá el número de lote de tu destino</p>
+    <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-gray-100 w-full max-w-sm text-center">
         
-        <input type="number" id="loteInput" placeholder="Ej: 354" inputmode="numeric">
+        <h1 class="text-2xl font-bold text-gray-900 tracking-tight mb-2">El Cantón - Islas</h1>
+        <p class="text-gray-500 text-sm mb-8">Ingresá el número de lote de tu destino</p>
         
-        <button onclick="buscarLote()" id="btnBuscar">Abrir en Maps</button>
+        <input 
+            type="number" 
+            id="loteInput" 
+            placeholder="Ej: 354" 
+            inputmode="numeric"
+            class="w-full px-4 py-4 text-center text-xl font-semibold border-2 border-gray-200 rounded-xl focus:border-brand-500 focus:ring-0 outline-none transition-colors mb-5 placeholder-gray-300 text-gray-800"
+        >
         
-        <div class="error" id="errorMsg">Error al buscar. Revisar consola (F12).</div>
+        <button 
+            onclick="buscarLote()" 
+            id="btnBuscar"
+            class="w-full py-4 bg-brand-600 text-white font-bold rounded-xl shadow-md hover:bg-brand-700 hover:shadow-lg transition-all disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed"
+        >
+            Abrir en Maps
+        </button>
+        
+        <div id="errorMsg" class="text-red-500 font-semibold text-sm mt-5" style="display: none;">
+            Error al buscar. Revisar consola (F12).
+        </div>
+    </div>
+
+    <div class="mt-6 flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-4 text-xs text-gray-400 font-medium text-center max-w-md">
+        <a href="mailto:contacto@lotego.com.ar?subject=Lotego%20User%20error%20report%20-%20El%20Canton%20-%20Islas&body=Por%20favor%20adjuntar%20una%20captura%20del%20error%20y%20explicar%20cu%C3%A1l%20es%20el%20problema" 
+           class="hover:text-gray-600 transition-colors">
+            Reportar un problema
+        </a>
+        <span class="hidden sm:inline">&bull;</span>
+        <a href="mailto:contacto@lotego.com.ar?subject=Quiero%20contratar%20lotego%20para%20mi%20barrio&body=Por%20favor%20indicanos%20el%20barrio%20en%20el%20que%20viv%C3%ADs%2C%20y%20los%20datos%20de%20contacto%20de%20la%20administraci%C3%B3n%2C%20consejo%20de%20propietarios%20%2F%20vecinos%2C%20o%20del%20desarrollador.%20Nosotros%20nos%20ocupamos%20acercarles%20la%20propuesta%20a%20ellos%20para%20que%20la%20soluci%C3%B3n%20de%20Lotego%20se%20implemente%20en%20tu%20barrio." 
+           class="hover:text-gray-600 transition-colors">
+            Contratar para mi barrio
+        </a>
+        <span class="hidden sm:inline">&bull;</span>
+        <a href="https://lotego.github.io/LoteGo/" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="hover:text-gray-600 transition-colors">
+            www.lotego.com.ar
+        </a>
     </div>
 
     <script>
@@ -145,7 +134,7 @@
 
             } catch (error) {
                 console.error("5. Error general capturado:", error.message); 
-                mensajeError.textContent = "Error al buscar el lote. Ver consola.";
+                mensajeError.textContent = "Error al buscar el lote.";
                 mensajeError.style.display = 'block';
             } finally {
                 boton.disabled = false;
