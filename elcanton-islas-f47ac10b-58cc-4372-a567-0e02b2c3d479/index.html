@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="noindex">
+    <title>Acceso | El Cantón - Islas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 350px;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        p {
+            color: #7f8c8d;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input[type="number"]:focus {
+            border-color: #3498db;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>El Cantón - Islas</h1>
+        <p>Ingresá el número de lote de tu destino</p>
+        
+        <input type="number" id="loteInput" placeholder="Ej: 354" inputmode="numeric">
+        
+        <button onclick="buscarLote()" id="btnBuscar">Abrir en Maps</button>
+        
+        <div class="error" id="errorMsg">Error al buscar. Revisar consola (F12).</div>
+    </div>
+
+    <script>
+        // Forzamos la función a ser global (window.buscarLote) para que el botón nunca la pierda de vista
+        window.buscarLote = async function() {
+            const numeroIngresado = document.getElementById('loteInput').value.trim();
+            const mensajeError = document.getElementById('errorMsg');
+            const boton = document.getElementById('btnBuscar');
+
+            if (numeroIngresado === "") {
+                mensajeError.textContent = "Por favor, ingresá un número.";
+                mensajeError.style.display = 'block';
+                return;
+            }
+
+            // Chequeo de seguridad: Confirmamos que el script de Supabase se haya descargado bien
+            if (typeof supabase === 'undefined') {
+                console.error("ERROR CRÍTICO: La librería de Supabase no cargó. Revisá si tenés internet o algún bloqueador (AdBlock) interfiriendo.");
+                mensajeError.textContent = "Error de conexión (Supabase no cargó).";
+                mensajeError.style.display = 'block';
+                return;
+            }
+
+            boton.disabled = true;
+            boton.textContent = 'Buscando...';
+            mensajeError.style.display = 'none'; 
+
+            try {
+                console.log("1. Inicializando conexión con Supabase...");
+                const supabaseUrl = 'https://blrwtqiyuhatbvhcockc.supabase.co';
+                const supabaseKey = 'sb_publishable_XJBKCiRlxx9fpaz1DPz6dg_42MYgV7y';
+                const clienteSupabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+                console.log("2. Intentando buscar en la base el lote:", numeroIngresado); 
+                const { data, error } = await clienteSupabase
+                    .from('lotes')
+                    .select('link')
+                    .eq('numero', numeroIngresado)
+                    .single();
+
+                if (error) {
+                    console.error("3. ERROR INTERNO DE SUPABASE:", error); 
+                    throw error; 
+                }
+
+                if (!data) {
+                    console.warn("3. La consulta se hizo, pero el lote no existe en la base de datos.");
+                    throw new Error("Lote no encontrado");
+                }
+
+                console.log("4. ¡Éxito! Link encontrado:", data.link); 
+                window.location.href = data.link;
+
+            } catch (error) {
+                console.error("5. Error general capturado:", error.message); 
+                mensajeError.textContent = "Error al buscar el lote. Ver consola.";
+                mensajeError.style.display = 'block';
+            } finally {
+                boton.disabled = false;
+                boton.textContent = 'Abrir en Maps';
+            }
+        };
+    </script>
+</body>
+</html>
