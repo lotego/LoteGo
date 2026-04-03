@@ -134,7 +134,7 @@
 
             } catch (error) {
                 console.error("5. Error general capturado:", error.message); 
-                mensajeError.textContent = "Error al buscar el lote.";
+                mensajeError.textContent = "El lote ingresado no existe.";
                 mensajeError.style.display = 'block';
             } finally {
                 boton.disabled = false;
