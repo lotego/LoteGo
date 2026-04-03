@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotego | Navegación simple en barrios privados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800 antialiased selection:bg-brand-500 selection:text-white">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <svg class="w-8 h-8 text-brand-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <span class="text-xl font-bold text-gray-900 tracking-tight">Lotego</span>
+            </div>
+            <a href="#contacto" class="text-sm font-semibold text-brand-600 hover:text-brand-700 transition-colors">
+                Contacto
+            </a>
+        </div>
+    </header>
+
+    <section class="relative bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 md:pt-24 md:pb-32 flex flex-col md:flex-row items-center gap-12">
+            
+            <div class="md:w-1/2 flex flex-col items-start text-left">
+                <span class="inline-block py-1 px-3 rounded-full bg-brand-50 text-brand-700 text-sm font-semibold mb-4 border border-brand-100">
+                    Innovación en Accesos
+                </span>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    Navegación simple al lote para invitados y proveedores.
+                </h1>
+                <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                    Optimizá el ingreso a tu barrio privado. Un simple escaneo del código QR en portería y Lotego te guía directo a tu destino usando Google Maps. Sin perderse, sin demoras.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                    <a href="#demo" class="px-8 py-3.5 bg-brand-600 text-white font-semibold rounded-lg shadow-md hover:bg-brand-700 hover:shadow-lg transition-all text-center w-full sm:w-auto">
+                        Solicitar Demo
+                    </a>
+                    <a href="#como-funciona" class="px-8 py-3.5 bg-white text-gray-700 font-semibold rounded-lg border border-gray-300 hover:bg-gray-50 transition-all text-center w-full sm:w-auto">
+                        ¿Cómo funciona?
+                    </a>
+                </div>
+            </div>
+
+            <div class="md:w-1/2 w-full flex justify-center">
+				<div class="relative w-full max-w-sm overflow-hidden rounded-3xl shadow-2xl border border-gray-200 transition-transform hover:scale-[1.02] duration-500">
+					<img 
+						src="imagenes/LoteGoQRimage.webp" 
+						alt="Smartphone escaneando código QR de Lotego en portería" 
+						class="w-full h-full object-cover"
+					>
+        
+					<div class="absolute inset-0 bg-gradient-to-t from-brand-900/20 to-transparent pointer-events-none"></div>
+				</div>   
+            </div>
+        </div>
+    </section>
+
+    <section id="como-funciona" class="bg-gray-900 py-20 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">El fin de los mapas de papel confusos</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Transformamos la experiencia de llegada, eliminando frustraciones y agilizando la circulación interna del barrio.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700">
+                    <div class="w-12 h-12 bg-red-500/20 text-red-400 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">El Problema Actual</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">•</span> Proveedores e invitados perdidos en barrios extensos.</li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">•</span> Guardias perdiendo tiempo dando indicaciones manuales.</li>
+                        <li class="flex items-start gap-2"><span class="text-red-400 mt-1">•</span> Congestión vehicular en el ingreso por demoras.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-br from-brand-900 to-gray-800 p-8 rounded-2xl border border-brand-700 relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-brand-500 rounded-full blur-3xl opacity-30"></div>
+                    <div class="w-12 h-12 bg-green-500/20 text-green-400 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">La Solución Lotego</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">✓</span> Un escaneo rápido desde el celular.</li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">✓</span> Redirección automática a la app nativa de mapas.</li>
+                        <li class="flex items-start gap-2"><span class="text-green-400 mt-1">✓</span> Llegada directa y sin escalas al lote correspondiente.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Diseñado para la velocidad y la eficiencia</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 bg-brand-50 rounded-xl flex items-center justify-center mb-6 text-brand-600">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Escaneo Instantáneo</h3>
+                    <p class="text-gray-600">No requiere descargar apps pesadas ni crear cuentas de usuario. Funciona al instante con la cámara nativa de cualquier smartphone.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 bg-brand-50 rounded-xl flex items-center justify-center mb-6 text-brand-600">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Integración Total</h3>
+                    <p class="text-gray-600">Abre directamente las coordenadas en Google Maps, aprovechando el GPS y el sistema de ruteo más utilizado y confiable del mundo.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 bg-brand-50 rounded-xl flex items-center justify-center mb-6 text-brand-600">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m-4-8.5V15"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Base de Lotes Precisa</h3>
+                    <p class="text-gray-600">Información geolocalizada con exactitud métrica. Mantenemos el trazado de tu barrio siempre actualizado en nuestra plataforma.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Rendimiento y seguridad de nivel empresarial</h2>
+                    <p class="text-gray-600 mb-6">
+                        Detrás de un simple código QR, Lotego opera sobre una infraestructura de base de datos relacional en la nube extremadamente robusta y escalable. 
+                    </p>
+                    <p class="text-gray-600">
+                        Esto nos garantiza tiempos de respuesta de milisegundos y disponibilidad 24/7, para que el flujo en tu portería nunca se detenga, manteniendo la integridad de los datos de cada lote bajo estrictos estándares de seguridad.
+                    </p>
+                </div>
+                <div class="md:w-1/2 grid grid-cols-2 gap-4">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 text-center">
+                        <span class="block text-3xl font-bold text-brand-600 mb-1">99.9%</span>
+                        <span class="text-sm font-medium text-gray-500">Uptime garantizado</span>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 text-center">
+                        <span class="block text-3xl font-bold text-brand-600 mb-1">&lt;200ms</span>
+                        <span class="text-sm font-medium text-gray-500">Tiempo de respuesta</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-brand-600 py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white mb-6">¿Listo para modernizar el acceso a tu barrio?</h2>
+            <p class="text-brand-100 mb-8 text-lg">Contactanos hoy para una demostración gratuita y descubrí lo fácil que es implementar Lotego.</p>
+            <button class="px-8 py-4 bg-white text-brand-700 font-bold rounded-lg shadow-lg hover:bg-gray-50 hover:-translate-y-0.5 transition-all">
+                Hablemos por WhatsApp
+            </button>
+        </div>
+    </section>
+
+    <footer id="contacto" class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <svg class="w-6 h-6 text-brand-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <span class="text-xl font-bold text-white tracking-tight">Lotego</span>
+            </div>
+            
+            <div class="flex flex-col items-center md:items-end text-sm">
+                <p class="mb-2">contacto@lotego.com.ar</p>
+                <p>&copy; 2026 Lotego. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
