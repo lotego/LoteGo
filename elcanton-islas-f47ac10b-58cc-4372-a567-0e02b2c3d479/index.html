@@ -125,7 +125,7 @@
 
                 console.log("2. Intentando buscar en la base el lote:", numeroIngresado); 
                 const { data, error } = await clienteSupabase
-                    .from('lotes')
+                    .from('elcanton-islas-f47ac10b-58cc-4372-a567-0e02b2c3d479')
                     .select('link')
                     .eq('numero', numeroIngresado)
                     .single();
