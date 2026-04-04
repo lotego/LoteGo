@@ -49,13 +49,22 @@
             class="w-full px-4 py-4 text-center text-xl font-semibold border-2 border-gray-200 rounded-xl focus:border-brand-500 focus:ring-0 outline-none transition-colors mb-5 placeholder-gray-300 text-gray-800"
         >
         
-        <button 
-            onclick="buscarLote()" 
-            id="btnBuscar"
-            class="w-full py-4 bg-brand-600 text-white font-bold rounded-xl shadow-md hover:bg-brand-700 hover:shadow-lg transition-all disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed"
-        >
-            Abrir en Maps
-        </button>
+        <div class="flex flex-col gap-3">
+            <button 
+                onclick="buscarLote('maps')" 
+                id="btnMaps"
+                class="w-full py-4 bg-brand-600 text-white font-bold rounded-xl shadow-md hover:bg-brand-700 hover:shadow-lg transition-all disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed"
+            >
+                Ir con Google Maps
+            </button>
+            <button 
+                onclick="buscarLote('waze')" 
+                id="btnWaze"
+                class="w-full py-4 bg-brand-600 text-white font-bold rounded-xl shadow-md hover:bg-brand-700 hover:shadow-lg transition-all disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed"
+            >
+                Ir con Waze
+            </button>
+        </div>
         
         <div id="errorMsg" class="text-red-500 font-semibold text-sm mt-5" style="display: none;">
             Error al buscar. Revisar consola (F12).
@@ -82,11 +91,12 @@
     </div>
 
     <script>
-        // Forzamos la función a ser global (window.buscarLote) para que el botón nunca la pierda de vista
-        window.buscarLote = async function() {
+        // Forzamos la función a ser global (window.buscarLote) para que los botones nunca la pierdan de vista
+        window.buscarLote = async function(appDestino) {
             const numeroIngresado = document.getElementById('loteInput').value.trim();
             const mensajeError = document.getElementById('errorMsg');
-            const boton = document.getElementById('btnBuscar');
+            const btnMaps = document.getElementById('btnMaps');
+            const btnWaze = document.getElementById('btnWaze');
 
             if (numeroIngresado === "") {
                 mensajeError.textContent = "Por favor, ingresá un número.";
@@ -102,8 +112,15 @@
                 return;
             }
 
-            boton.disabled = true;
-            boton.textContent = 'Buscando...';
+            btnMaps.disabled = true;
+            btnWaze.disabled = true;
+            
+            if (appDestino === 'maps') {
+                btnMaps.textContent = 'Buscando...';
+            } else {
+                btnWaze.textContent = 'Buscando...';
+            }
+            
             mensajeError.style.display = 'none'; 
 
             try {
@@ -112,10 +129,10 @@
                 const supabaseKey = 'sb_publishable_vfI-jyubD9JsHzahTwEzVQ_9lVV0tc0';
                 const clienteSupabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-                console.log("2. Intentando buscar en la base el lote:", numeroIngresado); 
+                console.log(`2. Intentando buscar en la base el lote: ${numeroIngresado} para ${appDestino}`); 
                 const { data, error } = await clienteSupabase
                     .from('elcanton-islas-f47ac10b-58cc-4372-a567-0e02b2c3d479')
-                    .select('link')
+                    .select(appDestino)
                     .eq('numero', numeroIngresado)
                     .single();
 
@@ -124,21 +141,23 @@
                     throw error; 
                 }
 
-                if (!data) {
-                    console.warn("3. La consulta se hizo, pero el lote no existe en la base de datos.");
-                    throw new Error("Lote no encontrado");
+                if (!data || !data[appDestino]) {
+                    console.warn(`3. La consulta se hizo, pero el lote o el link de ${appDestino} no existe en la base de datos.`);
+                    throw new Error("Lote o link no encontrado");
                 }
 
-                console.log("4. ¡Éxito! Link encontrado:", data.link); 
-                window.location.href = data.link;
+                console.log(`4. ¡Éxito! Link encontrado para ${appDestino}:`, data[appDestino]); 
+                window.location.href = data[appDestino];
 
             } catch (error) {
                 console.error("5. Error general capturado:", error.message); 
-                mensajeError.textContent = "El lote ingresado no existe.";
+                mensajeError.textContent = "El lote ingresado no existe o no tiene link.";
                 mensajeError.style.display = 'block';
             } finally {
-                boton.disabled = false;
-                boton.textContent = 'Abrir en Maps';
+                btnMaps.disabled = false;
+                btnWaze.disabled = false;
+                btnMaps.textContent = 'Ir con Google Maps';
+                btnWaze.textContent = 'Ir con Waze';
             }
         };
     </script>
