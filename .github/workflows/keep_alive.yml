@@ -1,0 +1,17 @@
+name: Mantener Supabase Despierto (LoteGo)
+
+on:
+  schedule:
+    # Se ejecuta a las 00:00 UTC todos los lunes y jueves (2 veces por semana)
+    - cron: '0 0 * * 1,4'
+  workflow_dispatch: # Esto permite que vos lo ejecutes manualmente cuando quieras
+
+jobs:
+  ping_supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Realizar consulta a la API
+        run: |
+          curl -i -X GET "https://oyodqwttcfpdkudzuyve.supabase.co/rest/v1/elcanton-islas-f47ac10b-58cc-4372-a567-0e02b2c3d479?limit=1" \
+          -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}"
