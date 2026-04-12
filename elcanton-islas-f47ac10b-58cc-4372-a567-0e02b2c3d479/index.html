@@ -31,9 +31,7 @@
             }
         }
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
+    </head>
 <body class="font-sans bg-gray-50 text-gray-800 antialiased selection:bg-brand-500 selection:text-white flex flex-col items-center justify-center min-h-screen p-4">
 
     <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-gray-100 w-full max-w-sm text-center">
@@ -91,7 +89,7 @@
     </div>
 
     <script>
-        // Forzamos la función a ser global (window.buscarLote) para que los botones nunca la pierdan de vista
+        // Forzamos la función a ser global para que los botones nunca la pierdan de vista
         window.buscarLote = async function(appDestino) {
             const numeroIngresado = document.getElementById('loteInput').value.trim();
             const mensajeError = document.getElementById('errorMsg');
@@ -100,14 +98,6 @@
 
             if (numeroIngresado === "") {
                 mensajeError.textContent = "Por favor, ingresá un número.";
-                mensajeError.style.display = 'block';
-                return;
-            }
-
-            // Chequeo de seguridad: Confirmamos que el script de Supabase se haya descargado bien
-            if (typeof supabase === 'undefined') {
-                console.error("ERROR CRÍTICO: La librería de Supabase no cargó. Revisá si tenés internet o algún bloqueador (AdBlock) interfiriendo.");
-                mensajeError.textContent = "Error de conexión (Supabase no cargó).";
                 mensajeError.style.display = 'block';
                 return;
             }
@@ -124,34 +114,35 @@
             mensajeError.style.display = 'none'; 
 
             try {
-                console.log("1. Inicializando conexión con Supabase...");
-                const supabaseUrl = 'https://oyodqwttcfpdkudzuyve.supabase.co';
-                const supabaseKey = 'sb_publishable_vfI-jyubD9JsHzahTwEzVQ_9lVV0tc0';
-                const clienteSupabase = supabase.createClient(supabaseUrl, supabaseKey);
+                console.log("1. Enviando consulta segura a través de Cloudflare...");
+                
+                // Construimos la URL de la consulta PostgREST apuntando a tu propio dominio
+                const proxyUrl = `https://lotego.com.ar/api/elcanton-islas-f47ac10b-58cc-4372-a567-0e02b2c3d479?select=${appDestino}&numero=eq.${numeroIngresado}`;
 
-                console.log(`2. Intentando buscar en la base el lote: ${numeroIngresado} para ${appDestino}`); 
-                const { data, error } = await clienteSupabase
-                    .from('elcanton-islas-f47ac10b-58cc-4372-a567-0e02b2c3d479')
-                    .select(appDestino)
-                    .eq('numero', numeroIngresado)
-                    .single();
+                // Realizamos la petición (Fetch)
+                const respuesta = await fetch(proxyUrl);
 
-                if (error) {
-                    console.error("3. ERROR INTERNO DE SUPABASE:", error); 
-                    throw error; 
+                if (!respuesta.ok) {
+                    console.error("2. ERROR HTTP:", respuesta.status); 
+                    // Si Cloudflare bloquea a un usuario por hacer más de 5 peticiones, devolverá un error (generalmente 403 o 429)
+                    throw new Error(`Error en la comunicación: ${respuesta.status}`);
                 }
 
-                if (!data || !data[appDestino]) {
+                // Convertimos la respuesta a formato JSON. PostgREST devuelve siempre un array [ { datos... } ]
+                const dataArray = await respuesta.json();
+
+                if (!dataArray || dataArray.length === 0 || !dataArray[0][appDestino]) {
                     console.warn(`3. La consulta se hizo, pero el lote o el link de ${appDestino} no existe en la base de datos.`);
                     throw new Error("Lote o link no encontrado");
                 }
 
-                console.log(`4. ¡Éxito! Link encontrado para ${appDestino}:`, data[appDestino]); 
-                window.location.href = data[appDestino];
+                console.log(`4. ¡Éxito! Link encontrado para ${appDestino}:`, dataArray[0][appDestino]); 
+                // Redirigir al usuario al mapa
+                window.location.href = dataArray[0][appDestino];
 
             } catch (error) {
                 console.error("5. Error general capturado:", error.message); 
-                mensajeError.textContent = "El lote ingresado no existe o no tiene link.";
+                mensajeError.textContent = "El lote ingresado no existe o consulta bloqueada.";
                 mensajeError.style.display = 'block';
             } finally {
                 btnMaps.disabled = false;
